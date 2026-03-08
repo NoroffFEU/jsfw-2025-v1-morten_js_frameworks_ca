@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { Header } from "./Header";
 
+// This is what we will display on every page.
 export function RootLayout() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">

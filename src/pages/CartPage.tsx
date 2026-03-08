@@ -10,8 +10,10 @@ export function CartPage() {
 
   if (cart.length === 0) {
     return (
-      <div>
-        <h1>Cart is empty. Try shopping!</h1>
+      <div className="container mx-auto mt-25">
+        <h1 className="text-2xl text-center">
+          The shopping cart is empty. Try adding some products!
+        </h1>
       </div>
     );
   }
@@ -19,54 +21,56 @@ export function CartPage() {
   const hasDiscountedPrice = cart.map(
     (product) => product.product.price < product.product.discountedPrice,
   );
-  // const discountPercentage = hasDiscount
-  //   ? Math.round(
-  //       ((product.price - product.discountedPrice) / product.price) * 100,
-  //     )
-  //   : 0;
 
   return (
     <div className="container">
-      <div className="grid grid-cols-3 p-4">
+      <div className="flex flex-wrap gap-6 p-4 sm:grid sm:grid-cols-3">
         {/* /// col 1  the product details starts here*/}
-        <div className="flex flex-col col-span-2 gap-6 p-4">
+        <div className="flex flex-col w-full gap-6 p-4 sm:col-span-2">
           {cart.map((item) => (
             <div
               key={item.product.id}
-              className="grid grid-cols-[auto_1fr] gap-10 bg-white p-4 rounded-lg shadow-sm"
+              className="grid gap-6 p-4 bg-white rounded-lg shadow-sm sm:grid-cols-[auto_1fr]"
             >
-              <div>
+              <div className="flex justify-center sm:justify-start">
                 <img
-                  className="object-cover rounded-sm w-30 h-30"
+                  className="object-cover rounded-md w-28 h-28 sm:w-30 sm:h-30"
                   src={item.product.image.url}
                   alt={item.product.image.alt}
                 />
               </div>
-              <div className="flex flex-col gap-1.5">
-                <h1>{item.product.title}</h1>
+
+              <div className="flex flex-col items-center gap-2 sm:items-start">
+                <h2 className="font-semibold">{item.product.title}</h2>
+
                 {hasDiscountedPrice ? (
-                  <>
-                    <div className="flex flex-col ">
-                      <p className="line-through ">{item.product.price} NOK</p>
-                      <p>{item.product.discountedPrice} NOK</p>
-                    </div>
-                  </>
+                  <div>
+                    <p className="text-sm text-gray-500 line-through">
+                      {item.product.price} NOK
+                    </p>
+                    <p className="font-medium">
+                      {item.product.discountedPrice} NOK
+                    </p>
+                  </div>
                 ) : (
                   <p>{item.product.price} NOK</p>
                 )}
-                <div className="flex justify-between">
+
+                <div className="flex flex-col gap-4 mt-2 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-3">
                     <button
-                      className="flex items-center justify-center w-8 h-8 text-gray-600 transition-colors border border-gray-300 rounded-md hover:bg-gray-100"
+                      className="flex items-center justify-center w-8 h-8 text-gray-600 transition border border-gray-300 rounded-md hover:bg-gray-100"
                       onClick={() =>
                         updateQuantity(item.product.id, item.quantity - 1)
                       }
                     >
                       <Minus />
                     </button>
+
                     <p>{item.quantity}</p>
+
                     <button
-                      className="flex items-center justify-center w-8 h-8 text-gray-600 transition-colors border border-gray-300 rounded-md hover:bg-gray-100"
+                      className="flex items-center justify-center w-8 h-8 text-gray-600 transition border border-gray-300 rounded-md hover:bg-gray-100"
                       onClick={() =>
                         updateQuantity(item.product.id, item.quantity + 1)
                       }
@@ -76,7 +80,7 @@ export function CartPage() {
                   </div>
 
                   <button
-                    className="flex items-center gap-1 font-medium text-red-500 transition cursor-pointer hover:text-red-800"
+                    className="flex items-center gap-1 font-medium text-red-500 transition hover:text-red-800"
                     onClick={() => removeFromCart(item.product.id)}
                   >
                     Remove
@@ -88,7 +92,7 @@ export function CartPage() {
           ))}
         </div>
         {/* /// col 2  order summary starts here*/}
-        <div className="self-start col-span-1 p-6 bg-white rounded-lg shadow-sm">
+        <div className="self-start w-full p-6 bg-white rounded-lg shadow-sm sm:col-span-1">
           <h2 className="mb-6 text-2xl font-semibold text-center">
             Order summary
           </h2>

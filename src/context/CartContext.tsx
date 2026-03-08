@@ -5,7 +5,7 @@ import { ShoppingCart } from "lucide-react";
 // void is used when we are not returning anything, but rather changing state
 // Here we create an interface that defines how the shopping cart object should look like.
 // When we are not returning anything, we use void, because we are only changing the state,
-// but when we are returning something like the price or number we return a number
+// but when we are returning something like the price or number, we return a number
 
 interface ShoppingCart {
   cart: CartItem[];
@@ -24,7 +24,7 @@ const ShoppingCartContext = createContext<ShoppingCart | undefined>(undefined);
 export function ShoppingCartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  // when we add to cart, we are ensure that the product we add mathces the Product type.
+  // when we add to cart, we ensure that the product we add mathces the Product type.
   // current value is the state of our cart before an item is added or removed.
   // first we check if the item we added already exists in our shopping cart.
   // if it does, we return item with its properties, but we add +1 in the quantity.

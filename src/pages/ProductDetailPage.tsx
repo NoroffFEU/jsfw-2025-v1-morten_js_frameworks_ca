@@ -3,7 +3,8 @@ import { useParams } from "react-router";
 import { fetchProductById } from "../api/products";
 import type { Product } from "../types/Product";
 import { useCart } from "../context/CartContext";
-import { Star, ShoppingCart, Check } from "lucide-react";
+import { Star, ShoppingCart, Check, ArrowLeft } from "lucide-react";
+import { Link } from "react-router";
 
 // When we click on a product we need to fetch the ID from the url.
 // on smaller screens use a grid with only 1 colum, on larger screens use 2.
@@ -52,6 +53,12 @@ export function ProductDetailPage() {
   const hasReviews = product.reviews.length > 0;
   return (
     <div className="container px-4 py-8 mx-auto sm:px-6 lg:px-8">
+      <div className="p-5 w-fit">
+        <Link to={"/"}>
+          <ArrowLeft className="size-8" />
+        </Link>
+        <p>Back to products</p>
+      </div>
       <div className="grid grid-cols-1 gap-8 p-5 lg:grid-cols-2">
         <div className="relative overflow-hidden bg-gray-100 rounded-lg aspect-square">
           <img
