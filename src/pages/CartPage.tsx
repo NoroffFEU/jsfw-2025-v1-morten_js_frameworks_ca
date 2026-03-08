@@ -25,7 +25,7 @@ export function CartPage() {
   return (
     <div className="container">
       <div className="flex flex-wrap gap-6 p-4 sm:grid sm:grid-cols-3">
-        {/* /// col 1  the product details starts here*/}
+        {/* /// For my clarity: col 1  the product details starts here*/}
         <div className="flex flex-col w-full gap-6 p-4 sm:col-span-2">
           {cart.map((item) => (
             <div
@@ -91,7 +91,7 @@ export function CartPage() {
             </div>
           ))}
         </div>
-        {/* /// col 2  order summary starts here*/}
+        {/* /// For my clarity: col 2  order summary starts here*/}
         <div className="self-start w-full p-6 bg-white rounded-lg shadow-sm sm:col-span-1">
           <h2 className="mb-6 text-2xl font-semibold text-center">
             Order summary

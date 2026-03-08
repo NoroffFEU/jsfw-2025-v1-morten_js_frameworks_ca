@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Check } from "lucide-react";
 
 // Here useEffect tells react to invoke clearCart when the page renders. We set [] as a depency to run once when the page loads.
+// If we left that out we would run into an infinite loop.
 export function CheckoutPage() {
   const { clearCart } = useCart();
 

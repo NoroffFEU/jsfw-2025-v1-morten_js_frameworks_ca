@@ -16,11 +16,11 @@ You can view a live demo of the project here: (https://app.netlify.com/projects/
 
 ## Technologies Used
 
-- **React** (with Hooks and functional components)
-- **TypeScript** for type safety
-- **Tailwind CSS** for styling and responsive layouts
-- **React Router** for page navigation
-- **React Context API** for cart state management
+- **React**
+- **TypeScript**
+- **Tailwind CSS**
+- **React Router**
+- **React Context API**
 
 ## Installation
 
