@@ -104,12 +104,12 @@ export function CartPage() {
                   key={item.product.id}
                   className="flex justify-between text-sm"
                 >
-                  <p>
+                  <p className="lg:text-lg">
                     {item.product.title} x {item.quantity}
                   </p>
 
                   {hasDiscountedPrice ? (
-                    <p>
+                    <p className="lg:text-lg">
                       {(item.product.discountedPrice * item.quantity).toFixed(
                         2,
                       )}{" "}

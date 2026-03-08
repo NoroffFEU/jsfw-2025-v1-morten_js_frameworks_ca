@@ -4,7 +4,7 @@ A simple e-commerce web application built with **React**, **TypeScript**, and **
 
 ## Deployment
 
-You can view a live demo of the project here: https://app.netlify.com/projects/shophup-project/deploys
+You can view a live demo of the project here: https://shophup-project.netlify.app/
 
 ## Feature
 
