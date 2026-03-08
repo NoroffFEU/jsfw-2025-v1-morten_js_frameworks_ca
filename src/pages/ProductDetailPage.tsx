@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router";
+import { useParams } from "react-router";
 import { fetchProductById } from "../api/products";
 import type { Product } from "../types/Product";
 import { useCart } from "../context/CartContext";
-import { Star, ShoppingCart, ArrowLeft, Check } from "lucide-react";
-
-import { Loader2 } from "lucide-react";
+import { Star, ShoppingCart, Check } from "lucide-react";
 
 // When we click on a product we need to fetch the ID from the url.
 // on smaller screens use a grid with only 1 colum, on larger screens use 2.

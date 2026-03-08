@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { useCart } from "../context/CartContext";
 import { useEffect } from "react";
 

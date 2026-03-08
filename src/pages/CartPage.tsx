@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { useCart } from "../context/CartContext";
-import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 
 // This is the cart page. This function will allow us to handle adding and removing items from cart
 
