@@ -10,7 +10,7 @@ export function CartPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="container mx-auto mt-25">
+      <div className="container px-4 py-16 mx-auto sm:px-6 lg:px-8">
         <h1 className="text-2xl text-center">
           The shopping cart is empty. Try adding some products!
         </h1>
@@ -18,108 +18,111 @@ export function CartPage() {
     );
   }
 
-  const hasDiscountedPrice = cart.map(
-    (product) => product.product.price < product.product.discountedPrice,
-  );
-
   return (
-    <div className="container">
-      <div className="flex flex-wrap gap-6 p-4 sm:grid sm:grid-cols-3">
-        {/* /// For my clarity: col 1  the product details starts here*/}
-        <div className="flex flex-col w-full gap-6 p-4 sm:col-span-2">
-          {cart.map((item) => (
-            <div
-              key={item.product.id}
-              className="grid gap-6 p-4 bg-white rounded-lg shadow-sm sm:grid-cols-[auto_1fr]"
-            >
-              <div className="flex justify-center sm:justify-start">
+    <div className="container px-4 py-8 mx-auto sm:px-6 lg:px-8">
+      <h1 className="mb-6 text-2xl font-semibold sm:text-3xl">Shopping cart</h1>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="flex flex-col gap-4 lg:col-span-2">
+          {cart.map((item) => {
+            const hasDiscount =
+              item.product.price > item.product.discountedPrice;
+            const unitPrice = hasDiscount
+              ? item.product.discountedPrice
+              : item.product.price;
+
+            return (
+              <div
+                key={item.product.id}
+                className="grid grid-cols-[5rem_1fr] gap-3 p-3 bg-white rounded-lg shadow-sm sm:grid-cols-[auto_1fr] sm:gap-4 sm:p-4"
+              >
                 <img
-                  className="object-cover rounded-md w-28 h-28 sm:w-30 sm:h-30"
+                  className="object-cover w-20 h-20 rounded-md sm:w-28 sm:h-28"
                   src={item.product.image.url}
                   alt={item.product.image.alt}
                 />
-              </div>
 
-              <div className="flex flex-col items-center gap-2 sm:items-start">
-                <h2 className="font-semibold">{item.product.title}</h2>
+                <div className="flex flex-col min-w-0 gap-2">
+                  <h2 className="font-semibold leading-snug">
+                    {item.product.title}
+                  </h2>
 
-                {hasDiscountedPrice ? (
-                  <div>
-                    <p className="text-sm text-gray-500 line-through">
-                      {item.product.price} NOK
-                    </p>
-                    <p className="font-medium">
-                      {item.product.discountedPrice} NOK
-                    </p>
-                  </div>
-                ) : (
-                  <p>{item.product.price} NOK</p>
-                )}
+                  {hasDiscount ? (
+                    <div className="flex flex-wrap items-baseline gap-x-2">
+                      <p className="text-sm text-gray-500 line-through">
+                        {item.product.price} NOK
+                      </p>
+                      <p className="font-medium">{unitPrice} NOK</p>
+                    </div>
+                  ) : (
+                    <p className="font-medium">{unitPrice} NOK</p>
+                  )}
 
-                <div className="flex flex-col gap-4 mt-2 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3 mt-auto">
+                    <div className="flex items-center gap-2">
+                      <button
+                        className="flex items-center justify-center w-9 h-9 text-gray-600 transition border border-gray-300 rounded-md hover:bg-gray-100"
+                        onClick={() =>
+                          updateQuantity(item.product.id, item.quantity - 1)
+                        }
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus className="size-4" />
+                      </button>
+
+                      <p className="w-6 text-center">{item.quantity}</p>
+
+                      <button
+                        className="flex items-center justify-center w-9 h-9 text-gray-600 transition border border-gray-300 rounded-md hover:bg-gray-100"
+                        onClick={() =>
+                          updateQuantity(item.product.id, item.quantity + 1)
+                        }
+                        aria-label="Increase quantity"
+                      >
+                        <Plus className="size-4" />
+                      </button>
+                    </div>
+
                     <button
-                      className="flex items-center justify-center w-8 h-8 text-gray-600 transition border border-gray-300 rounded-md hover:bg-gray-100"
-                      onClick={() =>
-                        updateQuantity(item.product.id, item.quantity - 1)
-                      }
+                      className="flex items-center gap-1 text-sm font-medium text-red-500 transition hover:text-red-800"
+                      onClick={() => removeFromCart(item.product.id)}
                     >
-                      <Minus />
-                    </button>
-
-                    <p>{item.quantity}</p>
-
-                    <button
-                      className="flex items-center justify-center w-8 h-8 text-gray-600 transition border border-gray-300 rounded-md hover:bg-gray-100"
-                      onClick={() =>
-                        updateQuantity(item.product.id, item.quantity + 1)
-                      }
-                    >
-                      <Plus />
+                      Remove
+                      <Trash2 className="size-4" />
                     </button>
                   </div>
-
-                  <button
-                    className="flex items-center gap-1 font-medium text-red-500 transition hover:text-red-800"
-                    onClick={() => removeFromCart(item.product.id)}
-                  >
-                    Remove
-                    <Trash2 />
-                  </button>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-        {/* /// For my clarity: col 2  order summary starts here*/}
-        <div className="self-start w-full p-6 bg-white rounded-lg shadow-sm sm:col-span-1">
-          <h2 className="mb-6 text-2xl font-semibold text-center">
+
+        <div className="self-start w-full p-4 bg-white rounded-lg shadow-sm sm:p-6">
+          <h2 className="mb-4 text-xl font-semibold sm:mb-6 sm:text-2xl">
             Order summary
           </h2>
 
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              {cart.map((item) => (
-                <div
-                  key={item.product.id}
-                  className="flex justify-between text-sm"
-                >
-                  <p className="lg:text-lg">
-                    {item.product.title} x {item.quantity}
-                  </p>
+              {cart.map((item) => {
+                const linePrice =
+                  (item.product.discountedPrice ?? item.product.price) *
+                  item.quantity;
 
-                  {hasDiscountedPrice ? (
-                    <p className="lg:text-lg">
-                      {(item.product.discountedPrice * item.quantity).toFixed(
-                        2,
-                      )}{" "}
-                      kr
+                return (
+                  <div
+                    key={item.product.id}
+                    className="flex items-start justify-between gap-3 text-sm"
+                  >
+                    <p className="min-w-0 break-words sm:text-base">
+                      {item.product.title} × {item.quantity}
                     </p>
-                  ) : (
-                    <p>{(item.product.price * item.quantity).toFixed(2)} kr</p>
-                  )}
-                </div>
-              ))}
+                    <p className="shrink-0 sm:text-base">
+                      {linePrice.toFixed(2)} kr
+                    </p>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="flex items-center justify-between pt-4 text-lg font-semibold border-t">
@@ -127,7 +130,7 @@ export function CartPage() {
               <p>{getTotalPrice().toFixed(2)} kr</p>
             </div>
 
-            <div className="flex flex-col gap-4 pt-2">
+            <div className="flex flex-col gap-3 pt-2">
               <Link to="/checkout">
                 <button className="w-full p-3 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
                   Proceed to checkout

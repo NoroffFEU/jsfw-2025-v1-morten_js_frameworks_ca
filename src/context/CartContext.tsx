@@ -1,6 +1,24 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import type { CartItem, Product } from "../types/Product";
-import { ShoppingCart } from "lucide-react";
+
+const CART_STORAGE = "cart";
+
+function loadCartFromStorage(): CartItem[] {
+  try {
+    const stored = localStorage.getItem(CART_STORAGE);
+    if (!stored) return [];
+    const parsed = JSON.parse(stored);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
 
 // void is used when we are not returning anything, but rather changing state
 // Here we create an interface that defines how the shopping cart object should look like.
@@ -22,7 +40,11 @@ const ShoppingCartContext = createContext<ShoppingCart | undefined>(undefined);
 
 //// this is the function where all the actions of the shopping cart is taken care of.
 export function ShoppingCartProvider({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(loadCartFromStorage);
+
+  useEffect(() => {
+    localStorage.setItem(CART_STORAGE, JSON.stringify(cart));
+  }, [cart]);
 
   // when we add to cart, we ensure that the product we add mathces the Product type.
   // current value is the state of our cart before an item is added or removed.
